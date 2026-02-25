@@ -1,0 +1,30 @@
+@page
+@model ProjectDefense.Web.Pages.ChooseRoleModel
+@{
+    ViewData["Title"] = "Choose Your Role";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>Please select the role you will have in this system.</p>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="list-group">
+                <label class="list-group-item">
+                    <input type="radio" asp-for="SelectedRole" value="Student" />
+                    <strong>Student</strong>
+                    <span class="d-block text-muted">I want to book and manage my project defense slots.</span>
+                </label>
+                <label class="list-group-item">
+                    <input type="radio" asp-for="SelectedRole" value="Supervisor" />
+                    <strong>Supervisor</strong>
+                    <span class="d-block text-muted">I want to manage rooms, my availability, and student reservations.</span>
+                </label>
+            </div>
+            <span asp-validation-for="SelectedRole" class="text-danger"></span>
+            <button type="submit" class="w-100 btn btn-lg btn-primary mt-3">Confirm Role</button>
+        </form>
+    </div>
+</div>

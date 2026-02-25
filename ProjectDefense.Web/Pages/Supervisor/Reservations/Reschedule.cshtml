@@ -1,0 +1,52 @@
+@page "{id:int}"
+@model ProjectDefense.Web.Pages.Supervisor.Reservations.RescheduleModel
+@{
+    ViewData["Title"] = "Reschedule Reservation";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <h4>Current Reservation</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Student</dt>
+            <dd class="col-sm-9">@Model.CurrentReservation.Student.UserName</dd>
+            <dt class="col-sm-3">Time</dt>
+            <dd class="col-sm-9">@Model.CurrentReservation.StartTime.ToString("g") - @Model.CurrentReservation.EndTime.ToString("t")</dd>
+            <dt class="col-sm-3">Room</dt>
+            <dd class="col-sm-9">@Model.CurrentReservation.SupervisorAvailability.Room.Name</dd>
+        </dl>
+
+        <h4 class="mt-4">Select a New Time Slot</h4>
+        <hr />
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            @if (Model.AvailableSlots.Any())
+            {
+                <div class="form-group">
+                    <label asp-for="NewReservationId" class="form-label"></label>
+                    <div class="list-group" style="max-height: 300px; overflow-y: auto;">
+                        @foreach (var slot in Model.AvailableSlots)
+                        {
+                            <label class="list-group-item">
+                                <input type="radio" asp-for="NewReservationId" value="@slot.Id" />
+                                @slot.StartTime.ToString("dddd, dd MMMM, HH:mm") - @slot.EndTime.ToString("HH:mm")
+                            </label>
+                        }
+                    </div>
+                    <span asp-validation-for="NewReservationId" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Confirm Reschedule</button>
+            }
+            else
+            {
+                <p class="text-muted">No other time slots are available.</p>
+            }
+            <a asp-page="./Index" class="btn btn-secondary mt-3">Back to List</a>
+        </form>
+    </div>
+</div>

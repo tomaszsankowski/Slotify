@@ -1,0 +1,48 @@
+@page
+@model ProjectDefense.Web.Pages.Supervisor.StudentsModel
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Students)
+        {
+            <tr>
+                <td>
+                    @user.UserName
+                </td>
+                <td>
+                    @user.Email
+                </td>
+                <td>
+                    @if (Model.BlockedStudents.Contains(user.Id))
+                    {
+                        <form method="post" asp-page-handler="Unban" asp-route-id="@user.Id">
+                            <button type="submit" class="btn btn-success">Unban</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-page-handler="Ban" asp-route-id="@user.Id">
+                            <button type="submit" class="btn btn-danger">Ban</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

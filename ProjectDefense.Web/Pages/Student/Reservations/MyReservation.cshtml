@@ -1,0 +1,53 @@
+@page
+@model ProjectDefense.Web.Pages.Student.Reservations.MyReservationModel
+
+@{
+    ViewData["Title"] = "My Reservation";
+}
+
+<h1>My Reservation</h1>
+
+@if (Model.Reservation != null)
+{
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reservation.SupervisorAvailability.Room)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reservation.SupervisorAvailability.Room.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reservation.StartTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reservation.StartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reservation.EndTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reservation.EndTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reservation.SupervisorAvailability.Supervisor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reservation.SupervisorAvailability.Supervisor.UserName)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Reservation.Id" />
+        <button type="submit" asp-page-handler="Cancel" class="btn btn-danger">Cancel Reservation</button>
+        <button type="submit" asp-page-handler="Change" class="btn btn-secondary">Change Reservation</button>
+    </form>
+</div>
+}
+else
+{
+    <p>You do not have any reservations.</p>
+    <a asp-page="./Index">Book a reservation</a>
+}

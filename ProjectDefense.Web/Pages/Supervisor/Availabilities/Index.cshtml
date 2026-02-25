@@ -1,0 +1,41 @@
+@page
+@model ProjectDefense.Web.Pages.Supervisor.Availabilities.IndexModel
+
+@{
+    ViewData["Title"] = "My Availabilities";
+}
+
+<h1>My Availabilities</h1>
+
+<p>
+    <a asp-page="Create">Define New Availability</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SupervisorAvailability[0].Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupervisorAvailability[0].SlotDurationInMinutes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SupervisorAvailability) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlotDurationInMinutes)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+	@page
+@model ProjectDefense.Web.Pages.Student.Reservations.IndexModel
+
+@{
+    ViewData["Title"] = "Available Reservations";
+}
+
+<h1>Available Reservations</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].SupervisorAvailability.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].SupervisorAvailability.Supervisor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Reservation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorAvailability.Room.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorAvailability.Supervisor.UserName)
+            </td>
+            <td>
+                @if (item.IsBlocked)
+                {
+                    <span class="text-muted">Blocked</span>
+                }
+                else
+                {
+                    <a asp-page="./Book" asp-route-id="@item.Id">Book</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

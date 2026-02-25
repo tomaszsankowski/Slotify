@@ -1,0 +1,91 @@
+@page
+@model ProjectDefense.Web.Pages.Supervisor.Reservations.IndexModel
+
+@{
+    ViewData["Title"] = "All Reservations";
+}
+
+<h1>All Reservations</h1>
+
+@if (TempData["StatusMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["StatusMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].SupervisorAvailability.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reservation[0].EndTime)
+            </th>
+            <th>
+                Student
+            </th>
+            <th>Manage Reservation</th>
+            <th>Manage Slot</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Reservation) {
+        <tr class="@(item.StartTime < DateTime.Now ? "table-secondary" : "")">
+            <td>
+                @Html.DisplayFor(modelItem => item.SupervisorAvailability.Room.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @if (item.IsBlocked)
+                {
+                    <span class="text-danger fw-bold">Blocked</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Student.UserName)
+                }
+            </td>
+            <td>
+                @if (item.StudentId != null && !item.IsBlocked && item.StartTime > DateTime.Now)
+                {
+                    <a asp-page="./Cancel" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Cancel</a>
+                    <a asp-page="./Reschedule" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info">Reschedule</a>
+                }
+            </td>
+            <td>
+                @if (item.StartTime > DateTime.Now)
+                {
+                    <form method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        @if (item.IsBlocked)
+                        {
+                            <button type="submit" asp-page-handler="Unblock" class="btn btn-sm btn-success">Unblock</button>
+                        }
+                        else
+                        {
+                            <button type="submit" asp-page-handler="Block" class="btn btn-sm btn-danger">Block</button>
+                        }
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
