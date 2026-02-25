@@ -2,7 +2,7 @@
 
 A project defense scheduling system built with **ASP.NET Core 8 (Razor Pages)**. Supervisors define their availability and manage lab rooms, while students browse open time slots and book exactly one slot for their project defense.
 
-![Slotify screenshot](docs/screenshot.png)
+<img width="1920" height="778" alt="image" src="https://github.com/user-attachments/assets/a7d8ff78-a7ba-474d-8f26-61862777ade9" />
 
 ## Features
 
